@@ -1,0 +1,16 @@
+{%extends "template.html.twig"%}
+{%block title%}Entreprises{%endblock%}
+{%block pageTitle%}Entreprises{%endblock%}
+{%block body%}
+    <div class="row">
+        {%for entreprise in entreprises%}
+            <div class="card" style="width: 18rem;{%if loop.index is odd%}background-color: #f5c2c7;{%endif%}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ entreprise.designation }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ entreprise.pfes|length }} Pfe(s) </h6>
+                </div>
+
+            </div>
+        {%endfor%}
+    </div>
+{%endblock%}

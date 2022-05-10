@@ -2,35 +2,31 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Entreprise;
 use App\Entity\Pfe;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class PfeFixture extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
 
-            $pfe1=new Pfe();
-            $pfe1->setTitle("pfe1");
-            $pfe1->setStudent("arij");
-            //$pfe1->setEntreprise("e1");
-            $manager->persist($pfe1);
+        $faker = Factory::create();
+        for($i = 0 ; $i< 100 ; $i++) {
+            $pfe = new Pfe();
+            $pfe->setStudent($faker->name);
+            $pfe->setTitle("Pfe" . $i);
 
-        $pfe2=new Pfe();
-        $pfe2->setTitle("pfe2");
-        $pfe2->setStudent("hamza");
-        //$pfe2->setEntreprise("e1");
-        $manager->persist($pfe2);
+            $repository = $manager->getRepository(Entreprise::class);
+            $random = rand(1,49);
+            $entreprise =$repository->findOneBy(['id'=>"$random"], []);
+            $pfe->setEntreprise($entreprise);
 
-        $pfe3=new Pfe();
-        $pfe3->setTitle("pfe3");
-        $pfe3->setStudent("oumayma");
-        //$pfe3->setEntreprise("e3");
-        $manager->persist($pfe3);
-
-
+            $manager->persist($pfe);
+        }
 
         $manager->flush();
     }
